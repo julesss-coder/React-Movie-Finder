@@ -123,7 +123,7 @@ class MovieFinder extends React.Component {
       return;
     }
 
-    fetch(`http://www.omdbapi.com/?apikey=ad74095d&s=${this.state.searchTerm}`)
+    fetch(`https://www.omdbapi.com/?apikey=ad74095d&s=${this.state.searchTerm}`)
       .then(checkStatus)
       .then(json)
       .then(data => {
