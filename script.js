@@ -9,8 +9,8 @@ OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=ad74095d
 ---
 
 TODO:
-1. Make fetch request modular, see Altcademy
-2. Extract components: Movie component, Input component
+1. Extract components: Movie component, Input component
+2. Make fetch request modular, see Altcademy
 3. Clean up layout: 
 - Movie poster and description overlap. --> Two movies in a row should apply from xl breakpoint, not from lg. 
 - Add styling to title. 
@@ -47,6 +47,48 @@ Movie database // not part of this app
 User input // STATE
 Displayed results // Computed based on user input -> not state // REVISED: David adds movie results to state, as well.
 */
+
+/* 
+ MovieInput component
+
+ TASK:
+ Show user input
+ Change state with user input
+ Submit user input
+ Make fetch request
+ Change state with movies received
+
+*/
+
+function Movies(props) {
+  let {movies} = props;
+
+  return (
+    <div className="row mt-5">
+      {movies.map(movie => {
+        let {Poster, Title, Type, Year, imdbID} = movie;
+          return (
+            <div className="individual-movie col-xs-12 col-lg-6 mb-5 pe-lg-1" key={imdbID}>
+              <div className="row">
+                <div className="movie-poster-wrapper col-xs-12 col-sm-6">
+                  {/* movie poster */}
+                  <a href={`https://www.imdb.com/title/${imdbID}/`} target="_blank">
+                    <img className="movie-poster d-block mx-auto" src={Poster} alt="" />
+                  </a>
+                </div>
+                <div className="movie-description col-xs-12 col-sm-6">
+                  {/* movie description */}
+                  <p className="movie-title">Title: <a href={`https://www.imdb.com/title/${imdbID}/`} target="_blank">{Title}</a></p>
+                  <p className="movie-year-type">{Type[0].toUpperCase() + Type.slice(1)} &#124; {Year}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      )}
+    </div>
+  );
+}
 
 class MovieFinder extends React.Component {
   constructor(props) {
@@ -130,7 +172,7 @@ class MovieFinder extends React.Component {
                 <label htmlFor="movie-search" className="visually-hidden">Movie Search: </label>
               </div>
               <div className="col-auto">
-                <input type="text" className="movie-search form-control" id="movie-search" aria-describedby="movie-search-help" value={this.state.searchTerm} onChange={this.handleInputChange} />
+                <input type="text" className="movie-search form-control" id="movie-search" aria-describedby="movie-search-help" value={searchTerm} onChange={this.handleInputChange} />
                 <div className="form-text" id="movie-search-help">Search movie by title.</div>
               </div>
               <div className="col-auto">
@@ -143,24 +185,20 @@ class MovieFinder extends React.Component {
         <div className="row movie-results mt-4">
           <div className="col-12">
             <h2>Results</h2>
-            
-            {/* Put all movies in one row - they wrap depending on the breakpoint */}
-            <div className="row mt-5">
-              {/* individual movie goes here */}
               {error ? <p className="col-12">{error}</p> : 
+              <Movies movies={movieList} />}
+              {/* {error ? <p className="col-12">{error}</p> : 
               movieList.map(movie => {
                 let {Poster, Title, Type, Year, imdbID} = movie;
                   return (
                     <div className="individual-movie col-xs-12 col-lg-6 mb-5 pe-lg-1" key={imdbID}>
                       <div className="row">
                         <div className="movie-poster-wrapper col-xs-12 col-sm-6">
-                          {/* movie poster */}
                           <a href={`https://www.imdb.com/title/${imdbID}/`} target="_blank">
                             <img className="movie-poster d-block mx-auto" src={Poster} alt="" />
                           </a>
                         </div>
                         <div className="movie-description col-xs-12 col-sm-6">
-                          {/* movie description */}
                           <p className="movie-title">Title: <a href={`https://www.imdb.com/title/${imdbID}/`} target="_blank">{Title}</a></p>
                           <p className="movie-year-type">{Type[0].toUpperCase() + Type.slice(1)} &#124; {Year}</p>
                         </div>
@@ -168,7 +206,7 @@ class MovieFinder extends React.Component {
                     </div>
                   );
                 }
-              )}
+              )} */}
 
 
               {/* <div className="individual-movie col-xs-12 col-lg-6 mb-5 pe-lg-1">
@@ -189,7 +227,7 @@ class MovieFinder extends React.Component {
                   </div>
                 </div>
               </div> */}
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
