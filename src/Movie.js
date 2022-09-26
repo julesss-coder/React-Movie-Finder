@@ -1,5 +1,7 @@
 import React from 'react';
 import { checkStatus, json } from './utils';
+import { Link } from "react-router-dom";
+
 
 class Movie extends React.Component {
   constructor(props) {
@@ -47,7 +49,14 @@ class Movie extends React.Component {
 
 
     return (
-      <div className="container">
+      <div className="container-fluid">
+        <div className="row mt-3">
+          <div className="col-12">
+            <Link className="link-dark" to="/">
+              <h1>Movie Finder</h1>
+            </Link>
+          </div>
+        </div>
         <div className="row pt-5">
           <div className="col-6">
             <h1>{Title}</h1>
